@@ -1,6 +1,6 @@
 # Control your GPIO lines from the command line
 
-The Windows Spring 2018 Update now includes the ability to write command-line apps. In this sample, we'll show you how to create a 
+The Windows April 2018 Update now includes the ability to write command-line apps. In this sample, we'll show you how to create a 
 command-line app to control the GPIO pins on your Windows IoT Core device.
 
 ## Usage

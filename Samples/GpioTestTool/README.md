@@ -1,6 +1,6 @@
 ---
 title: GPIO Test Tool Sample
-ms.author: christopher.co
+ms.author: christopher.co, jcoliz
 description: Tool for exercising GPIO pin configuration capabilities on Windows 10 IoT Core.
 ---
 
@@ -9,6 +9,7 @@ GPIO Test Tool
 
 This sample is a simple GPIO pin testing tool.  The tool is useful for verifying basic GPIO pin configuration capabilities on your Windows 10 IoT Core device.
 
+* [C#](./CS/README.md)
 * [C++](./Cpp/README.md)
 
 ## Additional resources
