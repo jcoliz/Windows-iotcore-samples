@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{6F17C043-65D8-4BC5-9387-9007232F0B6C}</ProjectGuid>
+    <ProjectGuid>{81800786-84FC-4988-89F4-85655A4FB3D2}</ProjectGuid>
     <OutputType>exe</OutputType>
     <WindowsAppContainer>true</WindowsAppContainer>
     <SubsystemVersion>6.02</SubsystemVersion>

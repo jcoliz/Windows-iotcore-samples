@@ -10,11 +10,11 @@
   IgnorableNamespaces="uap mp uap5 iot2 desktop4">
 
   <Identity
-    Name="3543b73d-7832-4db3-b61f-660b1fd345be"
+    Name="1c96d800-e9f7-4776-aac5-cd0db0848717"
     Publisher="CN=jcoliz"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="3543b73d-7832-4db3-b61f-660b1fd345be" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="1c96d800-e9f7-4776-aac5-cd0db0848717" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>GpioTestToolCS</DisplayName>
@@ -33,7 +33,7 @@
   <Applications>
     <Application 
       Id="App"
-      Executable="$targetnametoken$.exe"
+      Executable="GpioTestToolCS.exe"
       EntryPoint="GpioTestToolCS.Program"
       desktop4:SupportsMultipleInstances="true" 
       desktop4:Subsystem="console" 
