@@ -1,31 +1,46 @@
 ﻿using System;
-
-// This example code shows how you could implement the required main function for a 
-// Console UWP Application. You can replace all the code inside Main with your own custom code.
-
-// You should also change the Alias value in the AppExecutionAlias Extension in the 
-// Package.appxmanifest to a value that you define. To edit this file manually, right-click
-// it in Solution Explorer and select View Code, or open it with the XML Editor.
+using System.Runtime.InteropServices;
 
 namespace MemoryStatusCS
 {
     class Program
     {
-        static void Main(string[] args)
+        // P/Invoke the GlobalMemoryStatus API.
+        // TODO: Is there a better UWP API for this??
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, EntryPoint = "GlobalMemoryStatusEx", SetLastError = true)]
+        static extern bool GlobalMemoryStatusEx( [In,Out] MEMORYSTATUSEX lpBuffer);
+
+        public const string Name = "MemoryStatusCS";
+
+        private const int KB = 1024;
+
+        static int Main(string[] args)
         {
-            if (args.Length == 0)
+            bool success = false;
+
+            MEMORYSTATUSEX lpBuffer = new MEMORYSTATUSEX();
+            var result = GlobalMemoryStatusEx(lpBuffer);
+
+            if (!result)
             {
-                Console.WriteLine("Hello - no args");
+                Console.Error.WriteLine("Failed getting memory status");
             }
             else
             {
-                for (int i = 0; i < args.Length; i++)
-                {
-                    Console.WriteLine($"arg[{i}] = {args[i]}");
-                }
+                Console.WriteLine($"Memory in use {lpBuffer.dwMemoryLoad}%");
+                Console.WriteLine($"Total size of physical memory: {lpBuffer.ullTotalPhys / KB}KB");
+                Console.WriteLine($"Size of physical memory available: {lpBuffer.ullAvailPhys / KB}KB");
+                Console.WriteLine($"Size of the committed memory limit: {lpBuffer.ullTotalPageFile / KB}KB");
+                Console.WriteLine($"Size of available memory to commit: {lpBuffer.ullAvailPageFile / KB}KB");
+                Console.WriteLine($"Total size of the user mode portion of the virtual address space of the calling process: {lpBuffer.ullTotalVirtual / KB}KB");
+                Console.WriteLine($"Size of unreserved and uncommitted memory in the user mode portion of the virtual address space of the calling process: {lpBuffer.ullAvailVirtual / KB}KB");
+                Console.WriteLine($"Size of unreserved and uncommitted memory in the extended portion of the virtual address space of the calling process: {lpBuffer.ullAvailExtendedVirtual / KB}KB");
+
+                success = true;
             }
-            Console.WriteLine("Press a key to continue: ");
-            Console.ReadLine();
+
+            return success ? 0 : 1;
         }
     }
 }
