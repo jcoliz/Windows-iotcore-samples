@@ -1,6 +1,6 @@
 # Test your I2C devices from the command line
 
-The Windows Spring 2018 Update now includes the ability to write command-line apps. In this sample, we'll show you how to create a 
+The Windows April 2018 Update now includes the ability to write command-line apps. In this sample, we'll show you how to create a 
 command-line app to test communication with I2C devices. This can be a handy debugging aid to instantly test I2C commands without
 having to wait for a compile-deploy-run loop.
 
@@ -45,7 +45,6 @@ Commands:
 4. Go to Build -> Deploy Solution
 5. SSH into your device using the DefaultAccount user. Note that command-line apps cannot currently be launched using PowerShell.
 6. Run 'I2CTestToolCS.exe' from the command line
-
 
 ## Example session
 

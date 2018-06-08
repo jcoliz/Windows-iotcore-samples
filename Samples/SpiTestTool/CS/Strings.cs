@@ -48,7 +48,7 @@ Examples:
  > write { 00 11 22 .. FF }         Write bytes to device
  > read N                           Read N bytes
  > writeread { 00 11 .. FF } N      Write bytes then read N bytes
- > fullduplex { 00 11 .. FF }       Perform full duplex transfer
+ > fullduplex { 00 11 .. FF } N     Perform full duplex transfer, reading N bytes
  > info                             Display device information
  > help                             Display this help message
  > quit                             Quit
