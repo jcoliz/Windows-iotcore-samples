@@ -6,7 +6,6 @@ namespace MemoryStatusCS
     class Program
     {
         // P/Invoke the GlobalMemoryStatus API.
-        // TODO: Is there a better UWP API for this??
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, EntryPoint = "GlobalMemoryStatusEx", SetLastError = true)]
         static extern bool GlobalMemoryStatusEx( [In,Out] MEMORYSTATUSEX lpBuffer);
