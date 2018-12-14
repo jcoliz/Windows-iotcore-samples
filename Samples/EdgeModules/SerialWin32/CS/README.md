@@ -30,7 +30,7 @@ For this sample, obtain an [FTDI Serial TTL-232 cable](https://www.adafruit.com/
 
 Clone or download the sample repo. The first step from there is to publish it from a PowerShell command line, from the SerialWin32/CS directory.
 
-```
+```powershell
 PS D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> dotnet publish -r win-x64
 Microsoft (R) Build Engine version 15.8.166+gd4e8d81a88 for .NET Core
 Copyright (C) Microsoft Corporation. All rights reserved.
@@ -49,8 +49,8 @@ When following the sample, replace any "{ACR_*}" values with the correct values 
 
 Be sure to log into the container respository from your device.
 
-```
-PS C:\data\modules\SerialWin32> docker login {ACR_NAME}.azurecr.io {ACR_USER} {ACR_PASSWORD}
+```powershell
+C:\data\modules\SerialWin32> docker login {ACR_NAME}.azurecr.io {ACR_USER} {ACR_PASSWORD}
 ```
 
 ## Containerize the sample app
@@ -60,10 +60,10 @@ to refer to the address of our container.
 
 The x64 containers can be build directly on the PC, even if you plan to run them on an x64 Windows 10 IoT Core device.
 
-```
-PS D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> $Container = "{ACR_NAME}.azurecr.io/serialwin32:1.0.0-x64"
+```powershell
+D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> $Container = "{ACR_NAME}.azurecr.io/serialwin32:1.0.0-x64"
 
-PS D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker build . -f .\Dockerfile.windows-x64 -t $Container
+D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker build . -f .\Dockerfile.windows-x64 -t $Container
 
 Sending build context to Docker daemon  81.89MB
 Step 1/5 : FROM mcr.microsoft.com/windows/nanoserver/insider:10.0.17763.55
@@ -90,8 +90,8 @@ Successfully built d6cbd51600e3
 
 At this point, we'll want to run the container locally to ensure that it is able to find and talk to our peripheral.
 
-```
-PS D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker run --device "class/86E0D1E0-8089-11D0-9CE4-08003E301F73" --isolation process $Container SerialWin32.exe
+```powershell
+D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker run --device "class/86E0D1E0-8089-11D0-9CE4-08003E301F73" --isolation process $Container SerialWin32.exe
 
 SerialWin32 1.0.0.0
   -h, --help                 show this message and exit
@@ -112,8 +112,8 @@ Notice that we are overriding the entry point from the command line.
 
 Now let's pick a device and ensure we can open it:
 
-```
-PS D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker run --device "class/86E0D1E0-8089-11D0-9CE4-08003E301F73" --isolation process $Container SerialWin32.exe -c -dPID_6001
+```powershell
+D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker run --device "class/86E0D1E0-8089-11D0-9CE4-08003E301F73" --isolation process $Container SerialWin32.exe -c -dPID_6001
 
 11/20/2018 8:11:29 AM Connecting to device \\?\FTDIBUS#VID_0403+PID_6001+A403A7H4A#0000#{86e0d1e0-8089-11d0-9ce4-08003e301f73}...
 =====================================
@@ -144,8 +144,8 @@ WriteTotalTimeoutConstant: 0x0
 
 Now, we push the container into the repository which we built earlier. At this point, the container image is waiting for us to deploy.
 
-```
-PS D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker push $Container
+```powershell
+D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker push $Container
 
 The push refers to repository [{ACR_NAME}.azurecr.io/serialwin32]
 bf4863b963b0: Preparing
@@ -168,7 +168,7 @@ Choose the deployment file corresponding to your deployment atchitecture, then f
 Search for "{ACR_*}" and replace those values with the correct values for your container repository.
 The ACR_IMAGE must exactly match what you pushed, e.g. jcoliz.azurecr.io/serial-module:1.0.0-x64
 
-```
+```json
     "$edgeAgent": {
       "properties.desired": {
         "runtime": {
@@ -202,7 +202,7 @@ For reference, please see [Deploy Azure IoT Edge modules from Visual Studio Code
 
 Using the Azure IoT Edge extension for Visual Studio Code, you can select your device and choose "Start Monitoring D2C Message". You should see this:
 
-```
+```json
 [IoTHubMonitor] [4:04:43 PM] Message received from [jcoliz-preview/serialwin32]:
 {
   "machine": {
@@ -233,8 +233,8 @@ From a command prompt on the device, you can also check the logs for the module 
 
 First, find the module container:
 
-```
-PS D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker ps
+```powershell
+D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker ps
 
 CONTAINER ID        IMAGE                                                                           COMMAND                  CREATED              STATUS              PORTS                                                                  NAMES
 b4107d30a29d        {ACR_NAME}.azurecr.io/serialwin32:1.0.2-x64                                       "SerialWin32.exe -rt…"   About a minute ago   Up About a minute                                                                          serialwin32
@@ -244,8 +244,8 @@ b4107d30a29d        {ACR_NAME}.azurecr.io/serialwin32:1.0.2-x64                 
 
 Then, use the ID for the serialwin32 container to check the logs
 
-```
-PS D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker logs b4107d30a29d
+```powershell
+D:\Windows-iotcore-samples\Samples\EdgeModules\SerialWin32\CS> docker logs b4107d30a29d
 11/20/2018 8:22:41 AM Connecting to device \\?\FTDIBUS#VID_0403+PID_6001+A403A7H4A#0000#{86e0d1e0-8089-11d0-9ce4-08003e301f73}...
 11/20/2018 8:22:55 AM IoT Hub module client initialized.
 11/20/2018 8:22:55 AM Async Read 1 Started
