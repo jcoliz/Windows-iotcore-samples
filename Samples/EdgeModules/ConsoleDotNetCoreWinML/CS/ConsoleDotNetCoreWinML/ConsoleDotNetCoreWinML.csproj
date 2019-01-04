@@ -14,15 +14,15 @@
 
   <ItemGroup>
     <Reference Include="Windows.AI.MachineLearning.MachineLearningContract">
-      <HintPath>C:\Program Files (x86)\Windows Kits\10\References\10.0.17763.0\Windows.AI.MachineLearning.MachineLearningContract\1.0.0.0\Windows.AI.MachineLearning.MachineLearningContract.winmd</HintPath>
+      <HintPath>$(WINDOWS_SDKDIR)\Windows.AI.MachineLearning.MachineLearningContract\1.0.0.0\Windows.AI.MachineLearning.MachineLearningContract.winmd</HintPath>
       <IsWinMDFile>true</IsWinMDFile>
     </Reference>
     <Reference Include="Windows.Foundation.FoundationContract">
-      <HintPath>C:\Program Files (x86)\Windows Kits\10\References\10.0.17763.0\Windows.Foundation.FoundationContract\3.0.0.0\Windows.Foundation.FoundationContract.winmd</HintPath>
+      <HintPath>$(WINDOWS_SDKDIR)\Windows.Foundation.FoundationContract\3.0.0.0\Windows.Foundation.FoundationContract.winmd</HintPath>
       <IsWinMDFile>true</IsWinMDFile>
     </Reference>
     <Reference Include="Windows.Foundation.UniversalApiContract">
-      <HintPath>C:\Program Files (x86)\Windows Kits\10\References\10.0.17763.0\Windows.Foundation.UniversalApiContract\7.0.0.0\Windows.Foundation.UniversalApiContract.winmd</HintPath>
+      <HintPath>$(WINDOWS_SDKDIR)\Windows.Foundation.UniversalApiContract\7.0.0.0\Windows.Foundation.UniversalApiContract.winmd</HintPath>
       <IsWinMDFile>true</IsWinMDFile>
     </Reference>
   </ItemGroup>
@@ -35,5 +35,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
+    <Copy SourceFiles="resources\labels.txt" DestinationFiles="$(PublishDir)\labels.txt" />
+    <Copy SourceFiles="resources\office_fruit_coreml.onnx" DestinationFiles="$(PublishDir)\office_fruit_coreml.onnx" />
+    <Copy SourceFiles="Properties\Dockerfile.ClientEnterprise" DestinationFiles="$(PublishDir)\Dockerfile.ClientEnterprise" />
+    <Copy SourceFiles="Properties\Dockerfile.IoTUAP" DestinationFiles="$(PublishDir)\Dockerfile" />
+  </Target>
 
 </Project>
