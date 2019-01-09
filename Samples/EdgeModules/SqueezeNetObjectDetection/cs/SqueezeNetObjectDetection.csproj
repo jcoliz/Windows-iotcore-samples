@@ -12,6 +12,13 @@
     <None Remove="SqueezeNet.onnx" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\Common\cs\Log.cs" Link="Log.cs" />
+    <Compile Include="..\..\Common\cs\AsyncHelper.cs" Link="AsyncHelper.cs" />
+    <Compile Include="..\..\Common\cs\BlockTimerHelper.cs" Link="BlockTimerHelper.cs" />
+    <Compile Include="..\..\Common\cs\FrameSource.cs" Link="FrameSource.cs" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>1</WarningLevel>
   </PropertyGroup>
