@@ -20,6 +20,7 @@ namespace SampleModule
         static AppOptions Options;
         static ModuleClient ioTHubModuleClient;
         static readonly Random Rnd = new Random();
+        const int DisplayWidth = 16;
 
         static async Task Main(string[] args)
         {
@@ -106,7 +107,7 @@ namespace SampleModule
                     if (!string.IsNullOrEmpty(Options.Lines[0]))
                     {
                         // Set to 16x2
-                        device.Write(new byte[] { 0xFE, 0xD1, 16, 2 },0,4);
+                        device.Write(new byte[] { 0xFE, 0xD1, DisplayWidth, 2 },0,4);
                         await Task.Delay(TimeSpan.FromMilliseconds(20));
 
                         // Autoscroll off
@@ -125,8 +126,8 @@ namespace SampleModule
                         device.Write(new byte[] { 0xFE, 0x48 },0,2);
                         await Task.Delay(TimeSpan.FromMilliseconds(20));
 
-                        device.WriteLine(Options.Lines[0].PadRight(16));
-                        device.WriteLine(Options.Lines[1].PadRight(16));
+                        device.WriteLine(Options.Lines[0].PadRight(DisplayWidth));
+                        device.WriteLine(Options.Lines[1].PadRight(DisplayWidth));
 
                         Log.WriteLine($"Line 1: {Options.Lines[0]}");
                         Log.WriteLine($"Line 2: {Options.Lines[1]}");
