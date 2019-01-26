@@ -103,7 +103,7 @@ namespace SampleModule
                         Init().Wait();
                     }
 
-                    if (Options.Test)
+                    if (!string.IsNullOrEmpty(Options.Lines[0]))
                     {
                         // Set to 16x2
                         device.Write(new byte[] { 0xFE, 0xD1, 16, 2 },0,4);
@@ -125,12 +125,15 @@ namespace SampleModule
                         device.Write(new byte[] { 0xFE, 0x48 },0,2);
                         await Task.Delay(TimeSpan.FromMilliseconds(20));
 
-                        device.WriteLine("This is a test  ");
-                        device.WriteLine("1234567890123456");
+                        device.WriteLine(Options.Lines[0].PadRight(16));
+                        device.WriteLine(Options.Lines[1].PadRight(16));
+
+                        Log.WriteLine($"Line 1: {Options.Lines[0]}");
+                        Log.WriteLine($"Line 2: {Options.Lines[1]}");
                     }
 
                     //
-                    // Set up a background thread to read from the device
+                    // Set up a background thread to listen for messages and display them to the device
                     //
 
                     if (Options.Receive)
